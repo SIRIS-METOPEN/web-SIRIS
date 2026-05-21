@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "unicorn",
+    "typescript",
+    "oxc",
+    "react",
+    "react-hooks",
+    "jsx-a11y"
+  ],
+  "rules": {
+    "no-unused-vars": "error",
+    "no-explicit-any": "error"
+  }
+}
