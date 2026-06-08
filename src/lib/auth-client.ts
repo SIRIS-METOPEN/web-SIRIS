@@ -1,15 +1,9 @@
 import { createAuthClient } from 'better-auth/react';
-import { inferAdditionalFields } from 'better-auth/client/plugins';
+import { anonymousClient } from 'better-auth/client/plugins';
 
 export const authClient = createAuthClient({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
-  plugins: [
-    inferAdditionalFields({
-      user: {
-        role: { type: 'string' },
-      },
-    }),
-  ],
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000', // Ganti dengan URL backend jika berbeda
+  plugins: [anonymousClient()],
 });
 
-export const { useSession, signIn, signOut } = authClient;
+export const { signIn, signUp, useSession, signOut } = authClient;
