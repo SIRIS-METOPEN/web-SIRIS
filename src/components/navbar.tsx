@@ -34,7 +34,7 @@ export function Navbar() {
           <img
             src="/logo-siris.png"
             alt="SIRIS Logo"
-            className="h-8 object-contain mix-blend-multiply"
+            className="h-8 object-contain brightness-0"
           />
           <span className="text-[20px] font-bold text-[#0F172A] tracking-tight">
             SIRIS
