@@ -81,6 +81,7 @@ export default function LoginPage() {
       const { error } = await signIn.social({
         provider: 'google',
         callbackURL: window.location.origin + '/',
+        errorCallbackURL: window.location.origin + '/login',
       });
       if (error) {
         toast.error('Gagal masuk dengan Google');

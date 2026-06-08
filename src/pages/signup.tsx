@@ -85,6 +85,7 @@ export default function SignUpPage() {
       const { error } = await signIn.social({
         provider: 'google',
         callbackURL: window.location.origin + '/',
+        errorCallbackURL: window.location.origin + '/signup',
       });
       if (error) {
         toast.error('Gagal mendaftar dengan Google');
