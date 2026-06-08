@@ -18,7 +18,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Checkbox } from '../components/ui/checkbox';
-import { signUp, signIn } from '../lib/auth-client';
+import { signUp, signIn, signOut } from '../lib/auth-client';
 import { toast } from 'sonner';
 import { Footer } from '../components/footer';
 
@@ -61,8 +61,9 @@ export default function SignUpPage() {
       if (error) {
         toast.error(error.message || 'Gagal mendaftar');
       } else {
-        toast.success('Pendaftaran berhasil!');
-        navigate('/');
+        await signOut();
+        toast.success('Pendaftaran berhasil! Silakan login.');
+        navigate('/login');
       }
     });
   };
@@ -180,7 +181,7 @@ export default function SignUpPage() {
                   <Input
                     id="name"
                     placeholder="Masukkan nama sesuai identitas"
-                    className="pl-11 h-[48px] rounded-lg border-[#CBD5E1] dark:border-[#CBD5E1] bg-white dark:bg-white text-[#0F172A] dark:text-[#0F172A] placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
+                    className="pl-11 h-[48px] rounded-lg border-[#CBD5E1]  bg-white  text-[#0F172A]  placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
                     {...register('name')}
                     disabled={isPending}
                   />
@@ -206,7 +207,7 @@ export default function SignUpPage() {
                     id="email"
                     type="email"
                     placeholder="namaanda@gmail.com"
-                    className="pl-11 h-[48px] rounded-lg border-[#CBD5E1] dark:border-[#CBD5E1] bg-white dark:bg-white text-[#0F172A] dark:text-[#0F172A] placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
+                    className="pl-11 h-[48px] rounded-lg border-[#CBD5E1]  bg-white  text-[#0F172A]  placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
                     {...register('email')}
                     disabled={isPending}
                   />
@@ -232,7 +233,7 @@ export default function SignUpPage() {
                     id="phone"
                     type="tel"
                     placeholder="0812..."
-                    className="pl-11 h-[48px] rounded-lg border-[#CBD5E1] dark:border-[#CBD5E1] bg-white dark:bg-white text-[#0F172A] dark:text-[#0F172A] placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
+                    className="pl-11 h-[48px] rounded-lg border-[#CBD5E1]  bg-white  text-[#0F172A]  placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
                     {...register('phone')}
                     disabled={isPending}
                   />
@@ -258,7 +259,7 @@ export default function SignUpPage() {
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Minimal 8 karakter"
-                    className="pl-11 pr-11 h-[48px] rounded-lg border-[#CBD5E1] dark:border-[#CBD5E1] bg-white dark:bg-white text-[#0F172A] dark:text-[#0F172A] placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
+                    className="pl-11 pr-11 h-[48px] rounded-lg border-[#CBD5E1]  bg-white  text-[#0F172A]  placeholder:text-[#94A3B8] focus-visible:ring-[#0369A1] focus-visible:border-[#0369A1]"
                     {...register('password')}
                     disabled={isPending}
                   />
@@ -293,12 +294,12 @@ export default function SignUpPage() {
                     setValue('terms', checked as boolean)
                   }
                   disabled={isPending}
-                  className="mt-1 w-5 h-5 rounded-[4px] border-[#CBD5E1] dark:border-[#CBD5E1] bg-white dark:bg-white data-[state=checked]:bg-[#0369A1] data-[state=checked]:border-[#0369A1] dark:data-[state=checked]:bg-[#0369A1]"
+                  className="mt-1 w-5 h-5 rounded-[4px] border-[#CBD5E1]  bg-white  data-[state=checked]:bg-[#0369A1] data-[state=checked]:border-[#0369A1] "
                 />
                 <div className="grid gap-1.5 leading-none">
                   <label
                     htmlFor="terms"
-                    className="text-[14px] font-normal text-[#475569] dark:text-[#475569] leading-[1.6] cursor-pointer"
+                    className="text-[14px] font-normal text-[#475569]  leading-[1.6] cursor-pointer"
                   >
                     Saya menyetujui{' '}
                     <span className="font-semibold text-[#0369A1]">
@@ -333,7 +334,7 @@ export default function SignUpPage() {
                   type="button"
                   disabled={isPending}
                   onClick={handleGoogleSignUp}
-                  className="w-full h-[48px] rounded-lg border-[#CBD5E1] dark:border-[#CBD5E1] bg-white dark:bg-white text-[#475569] dark:text-[#475569] font-medium hover:bg-[#F8FAFC] dark:hover:bg-[#F8FAFC] hover:text-[#475569] dark:hover:text-[#475569] transition-colors flex items-center justify-center gap-3"
+                  className="w-full h-[48px] rounded-lg border-[#CBD5E1]  bg-white  text-[#475569]  font-medium hover:bg-[#F8FAFC]  hover:text-[#475569]  transition-colors flex items-center justify-center gap-3"
                 >
                   <svg className="h-5 w-5" viewBox="0 0 24 24">
                     <path
@@ -374,7 +375,7 @@ export default function SignUpPage() {
               type="button"
               disabled={isPending}
               onClick={handleAnonymousLogin}
-              className="w-full h-[48px] rounded-lg border-[#CBD5E1] dark:border-[#CBD5E1] bg-white dark:bg-white text-[#475569] dark:text-[#475569] font-medium hover:bg-[#F8FAFC] dark:hover:bg-[#F8FAFC] hover:text-[#475569] dark:hover:text-[#475569] transition-colors"
+              className="w-full h-[48px] rounded-lg border-[#CBD5E1]  bg-white  text-[#475569]  font-medium hover:bg-[#F8FAFC]  hover:text-[#475569]  transition-colors"
             >
               <Landmark className="w-5 h-5 mr-2" />
               Lanjutkan sebagai Anonim
