@@ -20,6 +20,13 @@ export const router = createBrowserRouter([
             Component: module.default,
           })),
       },
+      {
+        path: 'signup',
+        lazy: () =>
+          import('./pages/signup').then((module) => ({
+            Component: module.default,
+          })),
+      },
     ],
   },
 ]);

@@ -145,7 +145,7 @@ export default function HomePage() {
                     {session.user.name}
                   </p>
                   <p className="text-xs text-slate-500 capitalize">
-                    {session.user.role || 'User'}
+                    {(session.user as { role?: string }).role || 'User'}
                   </p>
                 </div>
               </div>
