@@ -1,270 +1,245 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import {
-  Loader2,
-  LogOut,
-  BookOpen,
-  Award,
-  DollarSign,
-  TrendingUp,
-  FileText,
-  Plus,
-  Search,
-} from 'lucide-react';
-import { useSession, signOut } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import {
+  ShieldCheck,
+  WalletCards,
+  LineChart,
+  AlertTriangle,
+  Send,
+} from 'lucide-react';
 
 export default function HomePage() {
-  const { data: session, isPending } = useSession();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isPending && !session) {
-      navigate('/login');
-    }
-  }, [session, isPending, navigate]);
-
-  const handleLogout = async () => {
-    try {
-      await signOut({
-        fetchOptions: {
-          onSuccess: () => {
-            navigate('/login');
-            toast.success('Logged out successfully');
-          },
-        },
-      });
-    } catch (error) {
-      console.error(error);
-      toast.error('Failed to log out');
-    }
-  };
-
-  if (isPending || !session) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-100">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-10 w-10 animate-spin text-indigo-500" />
-          <p className="text-sm font-medium tracking-wide text-slate-400">
-            Loading your workspace...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Sample data for research dashboard
-  const stats = [
-    {
-      name: 'Research Projects',
-      value: '12 Active',
-      icon: BookOpen,
-      color: 'text-indigo-400 bg-indigo-500/10',
-    },
-    {
-      name: 'Innovations Generated',
-      value: '4 Registered',
-      icon: Award,
-      color: 'text-emerald-400 bg-emerald-500/10',
-    },
-    {
-      name: 'Total Funding Received',
-      value: 'Rp 120M',
-      icon: DollarSign,
-      color: 'text-amber-400 bg-amber-500/10',
-    },
-    {
-      name: 'Impact Factor',
-      value: '3.84 Avg',
-      icon: TrendingUp,
-      color: 'text-rose-400 bg-rose-500/10',
-    },
-  ];
-
-  const recentResearch = [
-    {
-      id: 1,
-      title: 'Analisis Sentimen Kebijakan Publik Menggunakan Model LSTM',
-      author: 'Torikh Abdullah Naser',
-      status: 'Approved',
-      date: 'May 20, 2026',
-    },
-    {
-      id: 2,
-      title: 'Penerapan Sistem IoT Pada Budidaya Hidroponik Skala Rumah Tangga',
-      author: 'Ahmad Faisal',
-      status: 'Under Review',
-      date: 'May 18, 2026',
-    },
-    {
-      id: 3,
-      title:
-        'Rancang Bangun Aplikasi SIRIS Menggunakan Cloudflare Workers & React',
-      author: 'Torikh Abdullah Naser',
-      status: 'Draft',
-      date: 'May 15, 2026',
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      {/* Background radial effects */}
-      <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-indigo-500/5 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-emerald-500/5 blur-[100px] pointer-events-none" />
+    <div className="min-h-screen flex flex-col bg-white font-['Inter',sans-serif]">
+      <Navbar />
 
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-slate-900 bg-slate-950/80 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-tr from-indigo-500 to-emerald-500">
-                <FileText className="h-5 w-5 text-white" />
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="bg-[#F8F9FF] pt-16 pb-24 px-6">
+          <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6 max-w-lg">
+              <div className="inline-flex items-center gap-2 bg-[#E0F2FE] text-[#0369A1] px-3 py-1.5 rounded-full text-xs font-semibold">
+                <ShieldCheck className="w-4 h-4" />
+                Resmi dari Bank Indonesia
               </div>
-              <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-                SIRIS Portal
-              </span>
+              <h1 className="text-4xl md:text-5xl lg:text-[52px] font-bold text-[#0F172A] leading-[1.15] tracking-tight">
+                Integritas QRIS, Keamanan Bersama
+              </h1>
+              <p className="text-[#475569] text-lg leading-relaxed">
+                SIRIS adalah portal resmi untuk melaporkan penyalahgunaan atau
+                ketidaksesuaian implementasi QRIS sesuai dengan standar regulasi
+                sistem pembayaran nasional.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button className="bg-[#006399] hover:bg-[#00507d] text-white h-12 px-6 rounded-lg text-[15px] font-medium transition-all gap-2 shadow-lg shadow-blue-900/10 hover:shadow-blue-900/20">
+                  Laporkan Sekarang
+                  <Send className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-12 px-6 rounded-lg border-[#CBD5E1] text-[#0F172A] hover:bg-[#F1F5F9] font-medium transition-colors bg-white"
+                >
+                  Pelajari Aturan
+                </Button>
+              </div>
             </div>
-
-            {/* Profile & Logout */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                {session.user.image ? (
-                  <img
-                    src={session.user.image}
-                    alt={session.user.name}
-                    className="h-8 w-8 rounded-full border border-slate-800"
-                  />
-                ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-sm font-semibold">
-                    {session.user.name.charAt(0)}
-                  </div>
-                )}
-                <div className="hidden text-left sm:block">
-                  <p className="text-sm font-medium text-slate-200">
-                    {session.user.name}
-                  </p>
-                  <p className="text-xs text-slate-500 capitalize">
-                    {(session.user as { role?: string }).role || 'User'}
-                  </p>
-                </div>
+            <div className="relative mx-auto w-full max-w-[480px]">
+              {/* Replace with the actual image provided by user */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10 border border-slate-100 bg-white">
+                <img
+                  src="/QRIS Payment Secure.png"
+                  alt="Aplikasi Layanan QRIS"
+                  className="w-full h-auto object-cover"
+                />
               </div>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleLogout}
-                className="text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg"
-              >
-                <LogOut className="h-5 w-5" />
-              </Button>
+              {/* Decorative elements */}
+              <div className="absolute -z-10 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-blue-100/50 to-emerald-50/50 blur-3xl rounded-full" />
             </div>
           </div>
-        </div>
-      </header>
+        </section>
 
-      {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-        {/* Welcome Section */}
-        <div className="rounded-2xl border border-slate-900 bg-gradient-to-r from-slate-900/60 to-slate-900/20 p-6 md:p-8 backdrop-blur-xl">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* Stats Section */}
+        <section className="py-16 border-y border-slate-100 bg-white">
+          <div className="max-w-[1200px] mx-auto px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 divide-x-0 md:divide-x divide-slate-200">
+              <div className="flex flex-col items-center md:items-start md:px-8 text-center md:text-left">
+                <div className="text-4xl font-bold text-[#0369A1] tracking-tight mb-2">
+                  12.4K
+                </div>
+                <div className="text-sm font-medium text-[#64748B]">
+                  Total Laporan
+                </div>
+              </div>
+              <div className="flex flex-col items-center md:items-start md:px-8 text-center md:text-left">
+                <div className="text-4xl font-bold text-[#10B981] tracking-tight mb-2">
+                  98.2%
+                </div>
+                <div className="text-sm font-medium text-[#64748B]">
+                  Kasus Selesai
+                </div>
+              </div>
+              <div className="flex flex-col items-center md:items-start md:px-8 text-center md:text-left">
+                <div className="text-4xl font-bold text-[#F59E0B] tracking-tight mb-2">
+                  450+
+                </div>
+                <div className="text-sm font-medium text-[#64748B]">
+                  Penyedia Jasa (PJP)
+                </div>
+              </div>
+              <div className="flex flex-col items-center md:items-start md:px-8 text-center md:text-left">
+                <div className="text-4xl font-bold text-[#334155] tracking-tight mb-2">
+                  247
+                </div>
+                <div className="text-sm font-medium text-[#64748B]">
+                  Pemantauan Aktif
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Banner Peraturan */}
+        <section className="py-12 bg-white px-6">
+          <div className="max-w-[1200px] mx-auto bg-[#B45309] rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-start gap-6 shadow-xl shadow-orange-900/10">
+            <div className="bg-white/20 p-3 rounded-xl shrink-0">
+              <AlertTriangle className="w-8 h-8 text-white" />
+            </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
-                Welcome back, {session.user.name.split(' ')[0]}! 👋
-              </h1>
-              <p className="mt-2 text-slate-400">
-                Here is an overview of research, methodology validation, and
-                innovation tracking in your workspace.
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+                Peraturan Bank Indonesia No. 23/6/PBI/2021
+              </h3>
+              <p className="text-orange-100 text-[15px] leading-relaxed md:w-11/12">
+                Setiap Penyelenggara Jasa Pembayaran (PJP) dan Merchant wajib
+                mematuhi standar keamanan QRIS. Pelanggaran terhadap standar ini
+                dapat dikenakan sanksi administratif hingga pencabutan izin
+                operasional.
               </p>
             </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-medium rounded-xl px-5 py-5 gap-2 shadow-lg shadow-indigo-500/10 transition-all duration-200 hover:-translate-y-0.5">
-                <Plus className="h-4 w-4" /> New Proposal
-              </Button>
-            </div>
           </div>
-        </div>
+        </section>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <div
-              key={stat.name}
-              className="rounded-xl border border-slate-900 bg-slate-900/20 p-6 backdrop-blur-xl hover:border-slate-800 transition-all duration-200"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-400">{stat.name}</span>
-                <div className={`p-2 rounded-lg ${stat.color}`}>
-                  <stat.icon className="h-5 w-5" />
+        {/* Features Section */}
+        <section className="py-20 bg-[#F8F9FF] px-6">
+          <div className="max-w-[1200px] mx-auto">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0F172A] mb-4">
+                Mengapa Harus Melapor?
+              </h2>
+              <p className="text-[#64748B] text-lg">
+                Melaporkan ketidaksesuaian adalah langkah nyata dalam menjaga
+                ekosistem sistem pembayaran digital yang aman bagi seluruh
+                rakyat Indonesia.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div className="w-14 h-14 bg-[#E0F2FE] rounded-xl flex items-center justify-center mb-6">
+                  <ShieldCheck className="w-7 h-7 text-[#0369A1]" />
                 </div>
+                <h3 className="text-[20px] font-bold text-[#0F172A] mb-3">
+                  Lindungi Konsumen
+                </h3>
+                <p className="text-[#64748B] leading-relaxed text-[15px]">
+                  Laporan Anda mencegah penyalahgunaan dana dan penipuan yang
+                  merugikan pengguna akhir QRIS di seluruh Indonesia.
+                </p>
               </div>
-              <div className="mt-4">
-                <span className="text-2xl font-bold tracking-tight text-white">
-                  {stat.value}
-                </span>
+
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div className="w-14 h-14 bg-[#EDE9FE] rounded-xl flex items-center justify-center mb-6">
+                  <WalletCards className="w-7 h-7 text-[#7C3AED]" />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#0F172A] mb-3">
+                  Kepatuhan Regulasi
+                </h3>
+                <p className="text-[#64748B] leading-relaxed text-[15px]">
+                  Memastikan setiap PJP mengikuti protokol standar Bank
+                  Indonesia untuk menjaga stabilitas sistem pembayaran nasional.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div className="w-14 h-14 bg-[#FFEDD5] rounded-xl flex items-center justify-center mb-6">
+                  <LineChart className="w-7 h-7 text-[#EA580C]" />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#0F172A] mb-3">
+                  Kualitas Layanan
+                </h3>
+                <p className="text-[#64748B] leading-relaxed text-[15px]">
+                  Data laporan digunakan sebagai bahan evaluasi untuk terus
+                  meningkatkan performa dan kenyamanan layanan QRIS.
+                </p>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        </section>
 
-        {/* Recent Submissions */}
-        <div className="rounded-xl border border-slate-900 bg-slate-900/20 p-6 backdrop-blur-xl">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-white">
-              Recent Research Proposals
+        {/* Flow Section */}
+        <section className="py-24 bg-white px-6">
+          <div className="max-w-[1200px] mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F172A] mb-4">
+              Alur Pelaporan SIRIS
             </h2>
-            <div className="relative w-64">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
-              <input
-                type="text"
-                placeholder="Search research..."
-                aria-label="Search research"
-                className="w-full pl-9 pr-4 py-1.5 bg-slate-950 border border-slate-900 rounded-lg text-sm text-slate-300 placeholder-slate-500 focus:outline-none focus:border-slate-800 transition-colors"
-              />
-            </div>
-          </div>
+            <p className="text-[#64748B] text-lg max-w-xl mx-auto mb-16">
+              Proses transparan dan terukur untuk setiap laporan yang Anda
+              kirimkan.
+            </p>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr className="border-b border-slate-900 text-slate-400 font-medium">
-                  <th className="py-3 px-4">Title</th>
-                  <th className="py-3 px-4">Author</th>
-                  <th className="py-3 px-4">Date</th>
-                  <th className="py-3 px-4">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-900 text-slate-300">
-                {recentResearch.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="hover:bg-slate-900/30 transition-colors"
-                  >
-                    <td className="py-4 px-4 font-medium text-slate-200 max-w-md truncate">
-                      {item.title}
-                    </td>
-                    <td className="py-4 px-4">{item.author}</td>
-                    <td className="py-4 px-4 text-slate-400">{item.date}</td>
-                    <td className="py-4 px-4">
-                      <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          item.status === 'Approved'
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                            : item.status === 'Under Review'
-                              ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
-                              : 'bg-slate-800 text-slate-400 border border-slate-700'
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-16 relative">
+              {/* Connector Line for Desktop */}
+              <div className="hidden md:block absolute top-8 left-[10%] right-[10%] h-[2px] bg-slate-100 -z-10" />
+
+              {[
+                {
+                  id: 1,
+                  title: 'Identifikasi',
+                  desc: 'Temukan ketidaksesuaian pada Merchant atau PJP.',
+                },
+                {
+                  id: 2,
+                  title: 'Dokumentasi',
+                  desc: 'Ambil foto bukti transaksi atau tampilan QRIS.',
+                },
+                {
+                  id: 3,
+                  title: 'Isi Formulir',
+                  desc: 'Lengkapi data laporan melalui portal SIRIS.',
+                },
+                {
+                  id: 4,
+                  title: 'Verifikasi',
+                  desc: 'Tim Bank Indonesia memverifikasi laporan Anda.',
+                },
+                {
+                  id: 5,
+                  title: 'Tindak Lanjut',
+                  desc: 'Pemberian sanksi atau edukasi kepada pihak terkait.',
+                },
+              ].map((step) => (
+                <div key={step.id} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-white border-[4px] border-[#F1F5F9] flex items-center justify-center shadow-sm text-xl font-bold text-[#0F172A] mb-6">
+                    {step.id}
+                  </div>
+                  <h4 className="text-[17px] font-bold text-[#0F172A] mb-2">
+                    {step.title}
+                  </h4>
+                  <p className="text-[14px] text-[#64748B] leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <Button className="bg-[#006399] hover:bg-[#00507d] text-white h-14 px-8 rounded-xl text-[16px] font-medium transition-all shadow-lg shadow-blue-900/10">
+              Mulai Laporan Baru
+            </Button>
           </div>
-        </div>
+        </section>
       </main>
+
+      <Footer />
     </div>
   );
 }
