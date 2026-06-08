@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { LogOut } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 import { useSession, signOut } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -7,6 +8,7 @@ import { toast } from 'sonner';
 export function Navbar() {
   const { data: session, isPending } = useSession();
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -29,9 +31,11 @@ export function Navbar() {
       <div className="mx-auto max-w-[1200px] px-6 h-[72px] flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0369A1]">
-            <div className="h-3 w-3 rounded-full bg-white" />
-          </div>
+          <img
+            src="/logo-siris.png"
+            alt="SIRIS Logo"
+            className="h-8 object-contain mix-blend-multiply"
+          />
           <span className="text-[20px] font-bold text-[#0F172A] tracking-tight">
             SIRIS
           </span>
@@ -108,13 +112,91 @@ export function Navbar() {
               >
                 Masuk
               </Link>
-              <Button className="bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors">
+              <Button className="hidden md:flex bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors">
                 Laporkan Sekarang
               </Button>
             </>
           )}
+
+          {/* Mobile Menu Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-[#0F172A]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </Button>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-200 bg-white px-6 py-4 space-y-4 shadow-lg absolute w-full">
+          <nav className="flex flex-col gap-4">
+            <Link
+              to="/"
+              className="text-sm font-semibold text-[#0369A1]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Beranda
+            </Link>
+            <Link
+              to="#"
+              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Edukasi QRIS
+            </Link>
+            <Link
+              to="#"
+              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Laporkan
+            </Link>
+            <Link
+              to="#"
+              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Status
+            </Link>
+            <Link
+              to="#"
+              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              FAQ
+            </Link>
+          </nav>
+          <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
+            {!isPending && !session && (
+              <>
+                <Link
+                  to="/login"
+                  className="text-sm font-semibold text-[#0F172A] text-center w-full py-2 border border-slate-200 rounded-lg"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Masuk
+                </Link>
+                <Button className="w-full bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors">
+                  Laporkan Sekarang
+                </Button>
+              </>
+            )}
+            {!isPending && session && (
+              <Button className="w-full bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors">
+                Laporkan Sekarang
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 }
