@@ -25,6 +25,13 @@ export const router = createBrowserRouter([
                 Component: module.default,
               })),
           },
+          {
+            path: 'edukasi-qris',
+            lazy: () =>
+              import('./pages/edukasi-qris').then((module) => ({
+                Component: module.default,
+              })),
+          },
         ],
       },
       // Routes without Navbar (Auth, Dashboard, etc)
