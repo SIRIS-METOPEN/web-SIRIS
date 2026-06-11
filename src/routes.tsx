@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router';
 import { RootLayout } from './layouts/root-layout';
+import { PublicLayout } from './layouts/public-layout';
 
 export const router = createBrowserRouter([
   {
@@ -7,12 +8,26 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        index: true,
-        lazy: () =>
-          import('./pages/home').then((module) => ({
-            Component: module.default,
-          })),
+        // Public routes that share the Navbar
+        element: <PublicLayout />,
+        children: [
+          {
+            index: true,
+            lazy: () =>
+              import('./pages/home').then((module) => ({
+                Component: module.default,
+              })),
+          },
+          {
+            path: 'faq',
+            lazy: () =>
+              import('./pages/faq').then((module) => ({
+                Component: module.default,
+              })),
+          },
+        ],
       },
+      // Routes without Navbar (Auth, Dashboard, etc)
       {
         path: 'login',
         lazy: () =>

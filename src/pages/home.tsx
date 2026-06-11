@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import {
   ShieldCheck,
@@ -12,8 +11,6 @@ import {
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-white font-['Inter',sans-serif]">
-      <Navbar />
-
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="bg-[#F8F9FF] pt-16 pb-24 px-6">

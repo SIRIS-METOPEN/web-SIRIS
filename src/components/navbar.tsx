@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useLocation } from 'react-router';
 import { LogOut, Menu, X } from 'lucide-react';
 import { useSession, signOut } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 export function Navbar() {
   const { data: session, isPending } = useSession();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
@@ -24,6 +25,20 @@ export function Navbar() {
       console.error(error);
       toast.error('Gagal keluar');
     }
+  };
+
+  const getDesktopClass = (path: string) => {
+    const isActive = location.pathname === path;
+    return isActive
+      ? 'text-sm font-semibold text-[#0369A1] border-b-2 border-[#0369A1] py-1'
+      : 'text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent';
+  };
+
+  const getMobileClass = (path: string) => {
+    const isActive = location.pathname === path;
+    return isActive
+      ? 'text-sm font-semibold text-[#0369A1]'
+      : 'text-sm font-medium text-[#475569] hover:text-[#0F172A]';
   };
 
   return (
@@ -43,34 +58,28 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link
-            to="/"
-            className="text-sm font-semibold text-[#0369A1] border-b-2 border-[#0369A1] py-1"
-          >
+          <Link to="/" className={getDesktopClass('/')}>
             Beranda
           </Link>
           <Link
             to="#"
-            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors"
+            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent"
           >
             Edukasi QRIS
           </Link>
           <Link
             to="#"
-            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors"
+            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent"
           >
             Laporkan
           </Link>
           <Link
             to="#"
-            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors"
+            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent"
           >
             Status
           </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors"
-          >
+          <Link to="/faq" className={getDesktopClass('/faq')}>
             FAQ
           </Link>
         </nav>
@@ -140,7 +149,7 @@ export function Navbar() {
           <nav className="flex flex-col gap-4">
             <Link
               to="/"
-              className="text-sm font-semibold text-[#0369A1]"
+              className={getMobileClass('/')}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Beranda
@@ -167,8 +176,8 @@ export function Navbar() {
               Status
             </Link>
             <Link
-              to="#"
-              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              to="/faq"
+              className={getMobileClass('/faq')}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               FAQ
