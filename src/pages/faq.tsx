@@ -182,7 +182,7 @@ export default function FAQPage() {
                   Unduh panduan resmi langkah pelaporan untuk memudahkan Anda.
                 </p>
                 <a
-                  href="/panduan-pelaporan-siris.pdf"
+                  href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
                   target="_blank"
                   className="inline-flex items-center gap-2 text-[#38BDF8] font-semibold hover:text-[#7DD3FC] transition-colors"
                 >
