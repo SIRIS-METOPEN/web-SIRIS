@@ -73,7 +73,7 @@ export default function EdukasiQRISPage() {
           <ShieldCheck className="w-96 h-96 text-white" strokeWidth={1} />
         </div>
 
-        <div className="max-w-[1200px] mx-auto px-6 pt-16 pb-20 relative z-10">
+        <div className="max-w-[1200px] mx-auto px-6 pt-16 pb-24 relative z-10">
           <div className="max-w-2xl">
             <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm mb-6">
               Pusat Informasi Regulasi
@@ -91,10 +91,10 @@ export default function EdukasiQRISPage() {
       </section>
 
       {/* Main Content */}
-      <section className="max-w-[1200px] mx-auto px-6 -mt-8 relative z-20">
+      <section className="max-w-[1200px] mx-auto px-6 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Calculator (Col span 5) */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 lg:-mt-20 -mt-10">
             <Card className="bg-white border-0 shadow-lg rounded-2xl overflow-hidden h-full">
               <CardContent className="p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-4">
