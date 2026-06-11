@@ -30,15 +30,15 @@ export function Navbar() {
   const getDesktopClass = (path: string) => {
     const isActive = location.pathname === path;
     return isActive
-      ? "text-sm font-semibold text-[#0369A1] border-b-2 border-[#0369A1] py-1"
-      : "text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent";
+      ? 'text-sm font-semibold text-[#0369A1] border-b-2 border-[#0369A1] py-1'
+      : 'text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent';
   };
 
   const getMobileClass = (path: string) => {
     const isActive = location.pathname === path;
     return isActive
-      ? "text-sm font-semibold text-[#0369A1]"
-      : "text-sm font-medium text-[#475569] hover:text-[#0F172A]";
+      ? 'text-sm font-semibold text-[#0369A1]'
+      : 'text-sm font-medium text-[#475569] hover:text-[#0F172A]';
   };
 
   return (
@@ -58,10 +58,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link
-            to="/"
-            className={getDesktopClass('/')}
-          >
+          <Link to="/" className={getDesktopClass('/')}>
             Beranda
           </Link>
           <Link
@@ -82,10 +79,7 @@ export function Navbar() {
           >
             Status
           </Link>
-          <Link
-            to="/faq"
-            className={getDesktopClass('/faq')}
-          >
+          <Link to="/faq" className={getDesktopClass('/faq')}>
             FAQ
           </Link>
         </nav>

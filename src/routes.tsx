@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
                 Component: module.default,
               })),
           },
-        ]
+        ],
       },
       // Routes without Navbar (Auth, Dashboard, etc)
       {

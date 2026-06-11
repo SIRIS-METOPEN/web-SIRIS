@@ -31,7 +31,8 @@ const FAQ_DATA = [
   },
   {
     id: 'faq-4',
-    question: 'Apakah semua biaya tambahan (surcharge) dilarang oleh Bank Indonesia?',
+    question:
+      'Apakah semua biaya tambahan (surcharge) dilarang oleh Bank Indonesia?',
     answer:
       'Ya, Bank Indonesia secara tegas melarang merchant untuk membebankan tambahan biaya (surcharge) kepada konsumen yang bertransaksi menggunakan QRIS. Merchant harus menanggung biaya MDR (Merchant Discount Rate), bukan membebankannya ke pembeli.',
   },
@@ -93,7 +94,6 @@ export default function FAQPage() {
       {/* Main Content (Grid) */}
       <section className="max-w-[1100px] mx-auto px-6 -mt-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
           {/* Left Column: Accordion FAQ (col-span-2) */}
           <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
             <h2 className="text-2xl font-bold text-slate-900 mb-6 tracking-tight">
@@ -103,7 +103,11 @@ export default function FAQPage() {
             {filteredFaqs.length > 0 ? (
               <Accordion type="single" collapsible className="w-full">
                 {filteredFaqs.map((faq) => (
-                  <AccordionItem key={faq.id} value={faq.id} className="border-slate-100 py-2">
+                  <AccordionItem
+                    key={faq.id}
+                    value={faq.id}
+                    className="border-slate-100 py-2"
+                  >
                     <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-slate-800 hover:text-[#0369A1] transition-colors [&[data-state=open]]:text-[#0369A1]">
                       {faq.question}
                     </AccordionTrigger>
@@ -123,7 +127,6 @@ export default function FAQPage() {
 
           {/* Right Column: Contact Cards (col-span-1) */}
           <div className="lg:col-span-1 space-y-6">
-            
             {/* Email Card */}
             <Card className="bg-white border-slate-100 shadow-sm rounded-2xl overflow-hidden hover:border-[#E0F2FE] transition-colors">
               <CardContent className="p-6 flex items-start gap-4">
@@ -131,12 +134,18 @@ export default function FAQPage() {
                   <Mail className="h-6 w-6 text-[#0369A1]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-lg mb-1">Email</h3>
-                  <a href="mailto:pengaduan@siris.go.id" className="text-[#0369A1] font-medium hover:underline inline-block mb-3">
+                  <h3 className="font-bold text-slate-900 text-lg mb-1">
+                    Email
+                  </h3>
+                  <a
+                    href="mailto:pengaduan@siris.go.id"
+                    className="text-[#0369A1] font-medium hover:underline inline-block mb-3"
+                  >
                     pengaduan@siris.go.id
                   </a>
                   <p className="text-sm text-slate-500 leading-relaxed">
-                    Tim kami akan merespons laporan Anda dalam waktu maksimal 1x24 jam.
+                    Tim kami akan merespons laporan Anda dalam waktu maksimal
+                    1x24 jam.
                   </p>
                 </div>
               </CardContent>
@@ -149,8 +158,13 @@ export default function FAQPage() {
                   <PhoneCall className="h-6 w-6 text-[#0369A1]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-lg mb-1">Call Center</h3>
-                  <a href="tel:131" className="text-[#0369A1] font-bold text-xl hover:underline inline-block mb-3">
+                  <h3 className="font-bold text-slate-900 text-lg mb-1">
+                    Call Center
+                  </h3>
+                  <a
+                    href="tel:131"
+                    className="text-[#0369A1] font-bold text-xl hover:underline inline-block mb-3"
+                  >
                     131 (BICARA)
                   </a>
                   <p className="text-sm text-slate-500 leading-relaxed">
@@ -177,7 +191,6 @@ export default function FAQPage() {
                 </a>
               </CardContent>
             </Card>
-
           </div>
         </div>
       </section>
