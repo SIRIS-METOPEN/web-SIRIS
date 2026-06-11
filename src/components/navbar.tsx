@@ -61,10 +61,7 @@ export function Navbar() {
           <Link to="/" className={getDesktopClass('/')}>
             Beranda
           </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent"
-          >
+          <Link to="/edukasi-qris" className={getDesktopClass('/edukasi-qris')}>
             Edukasi QRIS
           </Link>
           <Link
@@ -155,8 +152,8 @@ export function Navbar() {
               Beranda
             </Link>
             <Link
-              to="#"
-              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              to="/edukasi-qris"
+              className={getMobileClass('/edukasi-qris')}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Edukasi QRIS
