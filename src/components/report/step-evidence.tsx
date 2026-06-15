@@ -3,7 +3,6 @@ import {
   Upload,
   Trash2,
   MapPin,
-  Globe,
   User,
   ArrowLeft,
   ArrowRight,
@@ -12,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
+import { MapPicker } from '@/components/ui/map-picker';
 
 interface StepEvidenceProps {
   evidenceFile: File | null;
@@ -23,7 +23,9 @@ interface StepEvidenceProps {
   merchantAddress: string;
   setMerchantAddress: (val: string) => void;
   latitude: string;
+  setLatitude: (val: string) => void;
   longitude: string;
+  setLongitude: (val: string) => void;
   isAnonymous: boolean;
   setIsAnonymous: (val: boolean) => void;
   reporterName: string;
@@ -44,7 +46,9 @@ export function StepEvidence({
   merchantAddress,
   setMerchantAddress,
   latitude,
+  setLatitude,
   longitude,
+  setLongitude,
   isAnonymous,
   setIsAnonymous,
   reporterName,
@@ -232,16 +236,16 @@ export function StepEvidence({
           />
         </div>
 
-        {/* Visual Map card placeholder */}
-        <div className="bg-slate-100 border border-slate-200 rounded-2xl h-[200px] flex flex-col items-center justify-center text-slate-400 p-6 text-center">
-          <Globe className="h-8 w-8 mb-2 text-slate-400/80 animate-pulse" />
-          <span className="text-xs font-bold text-slate-500">
-            Peta Lokasi Dinonaktifkan Sementara
-          </span>
-          <span className="text-[10px] text-slate-400 max-w-sm mt-1">
-            (Titik koordinat didapatkan otomatis menggunakan sistem koordinat
-            geolokasi IP browser Anda)
-          </span>
+        {/* Map Picker Component */}
+        <div className="h-[250px] w-full rounded-2xl overflow-hidden shadow-sm relative z-0">
+          <MapPicker
+            latitude={latitude}
+            longitude={longitude}
+            onChange={(lat, lng) => {
+              setLatitude(lat);
+              setLongitude(lng);
+            }}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
