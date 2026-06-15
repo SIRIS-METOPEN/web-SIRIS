@@ -64,10 +64,7 @@ export function Navbar() {
           <Link to="/edukasi-qris" className={getDesktopClass('/edukasi-qris')}>
             Edukasi QRIS
           </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent"
-          >
+          <Link to="/laporkan" className={getDesktopClass('/laporkan')}>
             Laporkan
           </Link>
           <Link
@@ -118,7 +115,10 @@ export function Navbar() {
               >
                 Masuk
               </Link>
-              <Button className="hidden md:flex bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors">
+              <Button
+                onClick={() => navigate('/laporkan')}
+                className="hidden md:flex bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors"
+              >
                 Laporkan Sekarang
               </Button>
             </>
@@ -159,8 +159,8 @@ export function Navbar() {
               Edukasi QRIS
             </Link>
             <Link
-              to="#"
-              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              to="/laporkan"
+              className={getMobileClass('/laporkan')}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Laporkan
@@ -190,13 +190,25 @@ export function Navbar() {
                 >
                   Masuk
                 </Link>
-                <Button className="w-full bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors">
+                <Button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    navigate('/laporkan');
+                  }}
+                  className="w-full bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors"
+                >
                   Laporkan Sekarang
                 </Button>
               </>
             )}
             {!isPending && session && (
-              <Button className="w-full bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors">
+              <Button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  navigate('/laporkan');
+                }}
+                className="w-full bg-[#006399] hover:bg-[#00507d] text-white rounded-lg px-5 font-medium shadow-sm transition-colors"
+              >
                 Laporkan Sekarang
               </Button>
             )}
