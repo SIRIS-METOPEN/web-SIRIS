@@ -141,6 +141,20 @@ export default function LaporkanPage() {
       });
 
       if (response.success) {
+        try {
+          const newTicket = {
+            ticketId: response.data.ticketId,
+            merchantName,
+            violationCategory,
+            createdAt: new Date().toISOString(),
+          };
+          const existing = localStorage.getItem('siris_report_history');
+          const history = existing ? JSON.parse(existing) : [];
+          localStorage.setItem('siris_report_history', JSON.stringify([newTicket, ...history]));
+        } catch (e) {
+          console.error('Failed to save to local history:', e);
+        }
+
         setTicketId(response.data.ticketId);
         setStep(4); // Success Page
         toast.success('Laporan berhasil dikirim');

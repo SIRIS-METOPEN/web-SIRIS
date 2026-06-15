@@ -67,11 +67,11 @@ export function Navbar() {
           <Link to="/laporkan" className={getDesktopClass('/laporkan')}>
             Laporkan
           </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors py-1 border-b-2 border-transparent"
-          >
+          <Link to="/status" className={getDesktopClass('/status')}>
             Status
+          </Link>
+          <Link to="/riwayat" className={getDesktopClass('/riwayat')}>
+            Riwayat
           </Link>
           <Link to="/faq" className={getDesktopClass('/faq')}>
             FAQ
@@ -166,11 +166,18 @@ export function Navbar() {
               Laporkan
             </Link>
             <Link
-              to="#"
-              className="text-sm font-medium text-[#475569] hover:text-[#0F172A]"
+              to="/status"
+              className={getMobileClass('/status')}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Status
+            </Link>
+            <Link
+              to="/riwayat"
+              className={getMobileClass('/riwayat')}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Riwayat
             </Link>
             <Link
               to="/faq"
