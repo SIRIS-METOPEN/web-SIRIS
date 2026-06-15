@@ -39,6 +39,20 @@ export const router = createBrowserRouter([
                 Component: module.default,
               })),
           },
+          {
+            path: 'status',
+            lazy: () =>
+              import('./pages/status').then((module) => ({
+                Component: module.default,
+              })),
+          },
+          {
+            path: 'riwayat',
+            lazy: () =>
+              import('./pages/riwayat').then((module) => ({
+                Component: module.default,
+              })),
+          },
         ],
       },
       // Routes without Navbar (Auth, Dashboard, etc)
