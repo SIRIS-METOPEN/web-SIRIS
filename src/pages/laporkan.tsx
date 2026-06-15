@@ -266,7 +266,9 @@ export default function LaporkanPage() {
                 merchantAddress={merchantAddress}
                 setMerchantAddress={setMerchantAddress}
                 latitude={latitude}
+                setLatitude={setLatitude}
                 longitude={longitude}
+                setLongitude={setLongitude}
                 isAnonymous={isAnonymous}
                 setIsAnonymous={setIsAnonymous}
                 reporterName={reporterName}
