@@ -150,7 +150,10 @@ export default function LaporkanPage() {
           };
           const existing = localStorage.getItem('siris_report_history');
           const history = existing ? JSON.parse(existing) : [];
-          localStorage.setItem('siris_report_history', JSON.stringify([newTicket, ...history]));
+          localStorage.setItem(
+            'siris_report_history',
+            JSON.stringify([newTicket, ...history])
+          );
         } catch (e) {
           console.error('Failed to save to local history:', e);
         }

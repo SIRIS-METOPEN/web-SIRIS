@@ -52,11 +52,15 @@ export function StepSuccess({
       <div className="text-left bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-6 max-w-xl mx-auto flex gap-3">
         <AlertCircle className="h-6 w-6 text-amber-600 flex-shrink-0 mt-0.5" />
         <div>
-          <h4 className="font-bold text-amber-900 text-sm mb-1">Penting: Simpan Kode Tracking Anda!</h4>
+          <h4 className="font-bold text-amber-900 text-sm mb-1">
+            Penting: Simpan Kode Tracking Anda!
+          </h4>
           <p className="text-xs text-amber-800 leading-relaxed">
-            Sistem telah menyimpan tiket ini secara otomatis ke halaman <strong>Riwayat Laporan</strong> di browser ini. 
-            Namun, jika Anda membersihkan data browser atau menggunakan perangkat lain, riwayat tersebut akan terhapus. 
-            Harap salin dan simpan kode tracking di atas secara mandiri.
+            Sistem telah menyimpan tiket ini secara otomatis ke halaman{' '}
+            <strong>Riwayat Laporan</strong> di browser ini. Namun, jika Anda
+            membersihkan data browser atau menggunakan perangkat lain, riwayat
+            tersebut akan terhapus. Harap salin dan simpan kode tracking di atas
+            secara mandiri.
           </p>
         </div>
       </div>

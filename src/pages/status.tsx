@@ -1,9 +1,26 @@
 import React, { useState, useCallback, useEffect, useTransition } from 'react';
-import { Search, Loader2, FileText, Calendar, Building2, ArrowRight, ShieldCheck, HelpCircle, FileCheck, Ban } from 'lucide-react';
+import {
+  Search,
+  Loader2,
+  FileText,
+  Calendar,
+  Building2,
+  ArrowRight,
+  ShieldCheck,
+  HelpCircle,
+  FileCheck,
+  Ban,
+} from 'lucide-react';
 import { useLocation } from 'react-router';
 import { fetchApi } from '../lib/api';
 import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../components/ui/card';
 import { Input } from '../components/ui/input';
 
 interface ReportDetails {
@@ -21,34 +38,50 @@ interface ReportDetails {
 }
 
 // Map database status string to display format and color classes
-const STATUS_CONFIG: Record<string, { label: string; description: string; colorClass: string; icon: React.ComponentType<{ className?: string }> }> = {
+const STATUS_CONFIG: Record<
+  string,
+  {
+    label: string;
+    description: string;
+    colorClass: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }
+> = {
   submitted: {
     label: 'Laporan Diterima',
     description: 'Aduan berhasil disimpan dan menunggu antrean peninjauan.',
-    colorClass: 'bg-blue-500/10 border-blue-500 text-blue-700 dark:text-blue-300',
+    colorClass:
+      'bg-blue-500/10 border-blue-500 text-blue-700 dark:text-blue-300',
     icon: FileText,
   },
   in_review: {
     label: 'Dalam Peninjauan',
-    description: 'Tim investigator sedang meninjau dokumen & kelengkapan bukti.',
-    colorClass: 'bg-amber-500/10 border-amber-500 text-amber-700 dark:text-amber-300',
+    description:
+      'Tim investigator sedang meninjau dokumen & kelengkapan bukti.',
+    colorClass:
+      'bg-amber-500/10 border-amber-500 text-amber-700 dark:text-amber-300',
     icon: Loader2,
   },
   verified: {
     label: 'Terverifikasi / Investigasi',
-    description: 'Bukti dinyatakan valid, pemeriksaan lapangan sedang dilakukan.',
-    colorClass: 'bg-purple-500/10 border-purple-500 text-purple-700 dark:text-purple-300',
+    description:
+      'Bukti dinyatakan valid, pemeriksaan lapangan sedang dilakukan.',
+    colorClass:
+      'bg-purple-500/10 border-purple-500 text-purple-700 dark:text-purple-300',
     icon: ShieldCheck,
   },
   resolved: {
     label: 'Selesai / Ditindak',
-    description: 'Investigasi rampung. Sanksi atau edukasi telah diterapkan pada merchant.',
-    colorClass: 'bg-green-500/10 border-green-500 text-green-700 dark:text-green-300',
+    description:
+      'Investigasi rampung. Sanksi atau edukasi telah diterapkan pada merchant.',
+    colorClass:
+      'bg-green-500/10 border-green-500 text-green-700 dark:text-green-300',
     icon: FileCheck,
   },
   rejected: {
     label: 'Ditolak',
-    description: 'Aduan ditolak karena bukti tidak memadai atau tidak ada indikasi surcharge.',
+    description:
+      'Aduan ditolak karena bukti tidak memadai atau tidak ada indikasi surcharge.',
     colorClass: 'bg-red-500/10 border-red-500 text-red-700 dark:text-red-300',
     icon: Ban,
   },
@@ -76,7 +109,9 @@ export default function StatusTrackerPage() {
         if (res.success && res.data) {
           setReportData(res.data);
         } else {
-          setErrorMsg('Laporan tidak ditemukan. Silakan periksa kembali Ticket ID Anda.');
+          setErrorMsg(
+            'Laporan tidak ditemukan. Silakan periksa kembali Ticket ID Anda.'
+          );
           setReportData(null);
         }
       } catch (err: unknown) {
@@ -91,10 +126,13 @@ export default function StatusTrackerPage() {
     });
   }, []);
 
-  const handleSearch = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    performSearch(ticketQuery);
-  }, [ticketQuery, performSearch]);
+  const handleSearch = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      performSearch(ticketQuery);
+    },
+    [ticketQuery, performSearch]
+  );
 
   useEffect(() => {
     const ticketId = (location.state as { ticketId?: string } | null)?.ticketId;
@@ -111,7 +149,6 @@ export default function StatusTrackerPage() {
     reportData?.status === 'rejected' ? 'resolved' : reportData?.status || ''
   );
 
-
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl min-h-[80vh] flex flex-col justify-start">
       {/* Hero Section */}
@@ -120,13 +157,17 @@ export default function StatusTrackerPage() {
           Lacak Status Aduan QRIS
         </h1>
         <p className="text-muted-foreground max-w-xl mx-auto text-base">
-          Masukkan nomor tiket pengaduan (Ticket ID) Anda untuk memantau progres peninjauan dan investigasi secara langsung.
+          Masukkan nomor tiket pengaduan (Ticket ID) Anda untuk memantau progres
+          peninjauan dan investigasi secara langsung.
         </p>
       </div>
 
       {/* Search Bar Container */}
       <div className="w-full max-w-xl mx-auto mb-12">
-        <form onSubmit={handleSearch} className="relative flex items-center gap-2">
+        <form
+          onSubmit={handleSearch}
+          className="relative flex items-center gap-2"
+        >
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5 pointer-events-none" />
             <Input
@@ -158,15 +199,21 @@ export default function StatusTrackerPage() {
       {isPending ? (
         <div className="flex flex-col items-center justify-center py-20 space-y-4">
           <Loader2 className="w-10 h-10 animate-spin text-primary" />
-          <p className="text-muted-foreground text-sm font-medium animate-pulse">Menghubungkan ke server SIRIS...</p>
+          <p className="text-muted-foreground text-sm font-medium animate-pulse">
+            Menghubungkan ke server SIRIS...
+          </p>
         </div>
       ) : reportData ? (
         <div className="space-y-8 animate-in fade-in duration-300">
           {/* Status Badge Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 rounded-2xl border border-border bg-card shadow-sm">
             <div className="space-y-1">
-              <span className="text-xs font-semibold text-muted-foreground tracking-wider uppercase">TICKET ID</span>
-              <h2 className="text-2xl font-bold text-secondary-foreground">{reportData.ticketId}</h2>
+              <span className="text-xs font-semibold text-muted-foreground tracking-wider uppercase">
+                TICKET ID
+              </span>
+              <h2 className="text-2xl font-bold text-secondary-foreground">
+                {reportData.ticketId}
+              </h2>
             </div>
             <div className="flex items-center gap-3">
               {(() => {
@@ -177,7 +224,9 @@ export default function StatusTrackerPage() {
                 };
                 const Icon = config.icon;
                 return (
-                  <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border ${config.colorClass} font-semibold text-sm`}>
+                  <div
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl border ${config.colorClass} font-semibold text-sm`}
+                  >
                     <Icon className="w-5 h-5" />
                     {config.label}
                   </div>
@@ -189,11 +238,13 @@ export default function StatusTrackerPage() {
           {/* Stepper / Progress Timeline */}
           {reportData.status !== 'rejected' ? (
             <div className="p-8 rounded-2xl border border-border bg-card shadow-sm">
-              <h3 className="text-lg font-bold mb-8">Alur Investigasi Laporan</h3>
+              <h3 className="text-lg font-bold mb-8">
+                Alur Investigasi Laporan
+              </h3>
               <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8">
                 {/* Horizontal line for desktop stepper */}
                 <div className="absolute top-6 left-[12.5%] right-[12.5%] h-0.5 bg-border hidden md:block" />
-                
+
                 {ORDERED_STATUSES.map((statusKey, idx) => {
                   const config = STATUS_CONFIG[statusKey];
                   const Icon = config.icon;
@@ -201,7 +252,10 @@ export default function StatusTrackerPage() {
                   const isCurrent = idx === currentStatusIndex;
 
                   return (
-                    <div key={statusKey} className="relative flex md:flex-col items-start md:items-center gap-4 md:gap-0 text-left md:text-center group">
+                    <div
+                      key={statusKey}
+                      className="relative flex md:flex-col items-start md:items-center gap-4 md:gap-0 text-left md:text-center group"
+                    >
                       {/* Connection bar for mobile stepper */}
                       {idx < ORDERED_STATUSES.length - 1 && (
                         <div className="absolute top-12 left-6 bottom-0 w-0.5 bg-border md:hidden" />
@@ -220,9 +274,13 @@ export default function StatusTrackerPage() {
 
                       {/* Labels */}
                       <div className="mt-1 md:mt-4 space-y-1">
-                        <p className={`font-semibold text-sm transition-colors duration-200 ${
-                          isCompleted ? 'text-secondary-foreground font-bold' : 'text-muted-foreground'
-                        }`}>
+                        <p
+                          className={`font-semibold text-sm transition-colors duration-200 ${
+                            isCompleted
+                              ? 'text-secondary-foreground font-bold'
+                              : 'text-muted-foreground'
+                          }`}
+                        >
                           {config.label}
                         </p>
                         <p className="text-xs text-muted-foreground leading-relaxed max-w-[200px]">
@@ -240,9 +298,13 @@ export default function StatusTrackerPage() {
                 <Ban className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-bold text-red-700 dark:text-red-400">Pengaduan Ditolak</h4>
+                <h4 className="font-bold text-red-700 dark:text-red-400">
+                  Pengaduan Ditolak
+                </h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Laporan ini telah ditolak oleh tim verifikasi Bank Indonesia karena dokumen bukti transaksi tidak lengkap, tidak jelas, atau tidak terbukti mengandung surcharge merchant.
+                  Laporan ini telah ditolak oleh tim verifikasi Bank Indonesia
+                  karena dokumen bukti transaksi tidak lengkap, tidak jelas,
+                  atau tidak terbukti mengandung surcharge merchant.
                 </p>
               </div>
             </div>
@@ -259,7 +321,11 @@ export default function StatusTrackerPage() {
                 &ldquo;{reportData.adminNotes}&rdquo;
               </p>
               <p className="text-[10px] text-muted-foreground text-right">
-                Pembaruan terakhir: {new Date(reportData.updatedAt).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}
+                Pembaruan terakhir:{' '}
+                {new Date(reportData.updatedAt).toLocaleString('id-ID', {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                })}
               </p>
             </div>
           )}
@@ -273,20 +339,28 @@ export default function StatusTrackerPage() {
                   <Building2 className="w-5 h-5 text-primary" />
                   Detail Merchant Pelanggar
                 </CardTitle>
-                <CardDescription>Informasi usaha yang dilaporkan konsumen</CardDescription>
+                <CardDescription>
+                  Informasi usaha yang dilaporkan konsumen
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
                 <div className="flex justify-between py-1 border-b border-border/40">
                   <span className="text-muted-foreground">Nama Merchant</span>
-                  <span className="font-semibold">{reportData.merchantName}</span>
+                  <span className="font-semibold">
+                    {reportData.merchantName}
+                  </span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-border/40">
                   <span className="text-muted-foreground">Kota / Wilayah</span>
                   <span>{reportData.merchantCity || '-'}</span>
                 </div>
                 <div className="space-y-1 pt-1">
-                  <span className="text-muted-foreground block">Alamat Merchant</span>
-                  <span className="text-xs text-secondary-foreground block leading-relaxed">{reportData.merchantAddress || '-'}</span>
+                  <span className="text-muted-foreground block">
+                    Alamat Merchant
+                  </span>
+                  <span className="text-xs text-secondary-foreground block leading-relaxed">
+                    {reportData.merchantAddress || '-'}
+                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -298,16 +372,27 @@ export default function StatusTrackerPage() {
                   <Calendar className="w-5 h-5 text-primary" />
                   Rincian Kejadian & Bukti
                 </CardTitle>
-                <CardDescription>Kronologi dan unggahan pendukung laporan</CardDescription>
+                <CardDescription>
+                  Kronologi dan unggahan pendukung laporan
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 text-sm">
                 <div className="flex justify-between py-1 border-b border-border/40">
-                  <span className="text-muted-foreground">Tanggal Kejadian</span>
-                  <span>{new Date(reportData.violationDate).toLocaleDateString('id-ID', { dateStyle: 'medium' })}</span>
+                  <span className="text-muted-foreground">
+                    Tanggal Kejadian
+                  </span>
+                  <span>
+                    {new Date(reportData.violationDate).toLocaleDateString(
+                      'id-ID',
+                      { dateStyle: 'medium' }
+                    )}
+                  </span>
                 </div>
                 {reportData.evidenceUrl && (
                   <div className="flex items-center justify-between py-1">
-                    <span className="text-muted-foreground">Lampiran Bukti</span>
+                    <span className="text-muted-foreground">
+                      Lampiran Bukti
+                    </span>
                     <a
                       href={reportData.evidenceUrl}
                       target="_blank"
@@ -320,7 +405,9 @@ export default function StatusTrackerPage() {
                   </div>
                 )}
                 <div className="space-y-1 pt-1">
-                  <span className="text-muted-foreground block">Kronologi Kejadian</span>
+                  <span className="text-muted-foreground block">
+                    Kronologi Kejadian
+                  </span>
                   <p className="text-xs text-secondary-foreground bg-muted/50 p-3 rounded-xl leading-relaxed whitespace-pre-line max-h-40 overflow-y-auto">
                     {reportData.description}
                   </p>
@@ -337,7 +424,8 @@ export default function StatusTrackerPage() {
           </div>
           <h3 className="text-lg font-bold">Belum Ada Hasil Pencarian</h3>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Gunakan kotak pencarian di atas untuk memasukkan Ticket ID yang didapat dari resi setelah pengiriman formulir laporan aduan.
+            Gunakan kotak pencarian di atas untuk memasukkan Ticket ID yang
+            didapat dari resi setelah pengiriman formulir laporan aduan.
           </p>
         </div>
       )}

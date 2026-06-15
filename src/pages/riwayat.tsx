@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
-import { Trash2, ExternalLink, Calendar, Building2, AlertCircle } from 'lucide-react';
+import {
+  Trash2,
+  ExternalLink,
+  Calendar,
+  Building2,
+  AlertCircle,
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 interface SavedReport {
@@ -41,7 +47,11 @@ export default function RiwayatPage() {
   };
 
   const handleClearAll = () => {
-    if (window.confirm('Apakah Anda yakin ingin menghapus seluruh riwayat aduan di browser ini?')) {
+    if (
+      window.confirm(
+        'Apakah Anda yakin ingin menghapus seluruh riwayat aduan di browser ini?'
+      )
+    ) {
       localStorage.removeItem('siris_report_history');
       setReports([]);
       toast.success('Semua riwayat berhasil dibersihkan');
@@ -56,7 +66,8 @@ export default function RiwayatPage() {
           Riwayat Laporan Anda
         </h1>
         <p className="text-muted-foreground max-w-xl mx-auto text-base">
-          Daftar pengaduan yang Anda kirimkan melalui browser ini. Klik laporan untuk melihat detail status investigasi.
+          Daftar pengaduan yang Anda kirimkan melalui browser ini. Klik laporan
+          untuk melihat detail status investigasi.
         </p>
       </div>
 
@@ -80,9 +91,13 @@ export default function RiwayatPage() {
           </div>
           <h3 className="text-lg font-bold">Belum Ada Riwayat Laporan</h3>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Anda belum pernah mengirimkan laporan aduan di browser ini, atau riwayat local storage Anda telah dibersihkan.
+            Anda belum pernah mengirimkan laporan aduan di browser ini, atau
+            riwayat local storage Anda telah dibersihkan.
           </p>
-          <Button onClick={() => navigate('/laporkan')} className="mt-2 bg-[#0369A1] hover:bg-[#0284c7] text-white rounded-xl">
+          <Button
+            onClick={() => navigate('/laporkan')}
+            className="mt-2 bg-[#0369A1] hover:bg-[#0284c7] text-white rounded-xl"
+          >
             Buat Laporan Baru
           </Button>
         </div>
@@ -94,7 +109,9 @@ export default function RiwayatPage() {
               role="button"
               tabIndex={0}
               aria-label={`Lacak status aduan ${report.ticketId} untuk merchant ${report.merchantName}`}
-              onClick={() => navigate('/status', { state: { ticketId: report.ticketId } })}
+              onClick={() =>
+                navigate('/status', { state: { ticketId: report.ticketId } })
+              }
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   navigate('/status', { state: { ticketId: report.ticketId } });
@@ -117,7 +134,11 @@ export default function RiwayatPage() {
                 </h3>
                 <p className="text-xs text-slate-500 flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5" />
-                  Dikirim pada: {new Date(report.createdAt).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}
+                  Dikirim pada:{' '}
+                  {new Date(report.createdAt).toLocaleString('id-ID', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                  })}
                 </p>
               </div>
 
@@ -146,7 +167,10 @@ export default function RiwayatPage() {
           <div className="flex gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6 text-xs text-amber-800 leading-relaxed">
             <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
             <span>
-              <strong>Catatan:</strong> Riwayat di atas hanya tersimpan secara lokal di browser perangkat ini. Jika Anda membersihkan data/cache browser atau menggunakan perangkat/browser lain, data ini akan hilang.
+              <strong>Catatan:</strong> Riwayat di atas hanya tersimpan secara
+              lokal di browser perangkat ini. Jika Anda membersihkan data/cache
+              browser atau menggunakan perangkat/browser lain, data ini akan
+              hilang.
             </span>
           </div>
         </div>
