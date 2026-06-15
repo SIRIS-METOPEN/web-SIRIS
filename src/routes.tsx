@@ -32,6 +32,13 @@ export const router = createBrowserRouter([
                 Component: module.default,
               })),
           },
+          {
+            path: 'laporkan',
+            lazy: () =>
+              import('./pages/laporkan').then((module) => ({
+                Component: module.default,
+              })),
+          },
         ],
       },
       // Routes without Navbar (Auth, Dashboard, etc)
