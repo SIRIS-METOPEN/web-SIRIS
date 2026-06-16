@@ -53,9 +53,19 @@ export default function AdminLayout() {
   const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, path: '/admin' },
     { name: 'Laporan Masuk', icon: FileSpreadsheet, path: '/admin/reports' },
-    { name: 'Investigasi', icon: FileSearch, path: '/admin/investigasi' },
+    {
+      name: 'Investigasi',
+      icon: FileSearch,
+      path: '/admin/investigasi',
+      disabled: true,
+    },
     { name: 'Statistik', icon: BarChart3, path: '/admin/statistik' },
-    { name: 'Pengaturan', icon: Settings, path: '/admin/settings' },
+    {
+      name: 'Pengaturan',
+      icon: Settings,
+      path: '/admin/settings',
+      disabled: true,
+    },
   ];
 
   const isDetailPage =
@@ -87,20 +97,28 @@ export default function AdminLayout() {
             {navItems.map((item) => {
               const isActive =
                 item.path === '/admin'
-                  ? location.pathname === '/admin'
+                  ? location.pathname === '/admin' ||
+                    location.pathname === '/admin/'
                   : location.pathname.startsWith(item.path);
               return (
                 <button
                   key={item.name}
-                  onClick={() => navigate(item.path)}
+                  onClick={() => !item.disabled && navigate(item.path)}
+                  disabled={item.disabled}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-all ${
-                    isActive
-                      ? 'bg-[#1E293B] text-sky-400 shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#111C38]/50'
+                    item.disabled
+                      ? 'opacity-50 cursor-not-allowed text-slate-500'
+                      : isActive
+                        ? 'bg-[#1E293B] text-sky-400 shadow-sm'
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-[#111C38]/50'
                   }`}
                 >
                   <item.icon
-                    className={`w-5 h-5 ${isActive ? 'text-sky-400' : 'text-slate-400'}`}
+                    className={`w-5 h-5 ${
+                      isActive && !item.disabled
+                        ? 'text-sky-400'
+                        : 'text-slate-500'
+                    }`}
                   />
                   {item.name}
                 </button>
