@@ -76,6 +76,12 @@ export function Navbar() {
           <Link to="/faq" className={getDesktopClass('/faq')}>
             FAQ
           </Link>
+          {session?.user &&
+            (session.user as { role?: string }).role === 'admin' && (
+              <Link to="/admin" className={getDesktopClass('/admin')}>
+                Dashboard Admin
+              </Link>
+            )}
         </nav>
 
         {/* Auth / Actions */}
@@ -186,6 +192,16 @@ export function Navbar() {
             >
               FAQ
             </Link>
+            {session?.user &&
+              (session.user as { role?: string }).role === 'admin' && (
+                <Link
+                  to="/admin"
+                  className={getMobileClass('/admin')}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Dashboard Admin
+                </Link>
+              )}
           </nav>
           <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
             {!isPending && !session && (

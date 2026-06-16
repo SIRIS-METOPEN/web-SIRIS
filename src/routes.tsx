@@ -70,6 +70,44 @@ export const router = createBrowserRouter([
             Component: module.default,
           })),
       },
+      // Admin Dashboard Routes
+      {
+        path: 'admin',
+        lazy: () =>
+          import('./layouts/admin-layout').then((module) => ({
+            Component: module.default,
+          })),
+        children: [
+          {
+            index: true,
+            lazy: () =>
+              import('./pages/admin/dashboard').then((module) => ({
+                Component: module.default,
+              })),
+          },
+          {
+            path: 'reports',
+            lazy: () =>
+              import('./pages/admin/reports-list').then((module) => ({
+                Component: module.default,
+              })),
+          },
+          {
+            path: 'reports/:id',
+            lazy: () =>
+              import('./pages/admin/report-detail').then((module) => ({
+                Component: module.default,
+              })),
+          },
+          {
+            path: 'statistik',
+            lazy: () =>
+              import('./pages/admin/statistik').then((module) => ({
+                Component: module.default,
+              })),
+          },
+        ],
+      },
     ],
   },
 ]);
