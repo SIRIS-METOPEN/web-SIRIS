@@ -166,6 +166,7 @@ export default function RiwayatPage() {
           {reports.map((report) => (
             <div
               key={report.ticketId}
+              // oxlint-disable-next-line prefer-tag-over-role
               role="button"
               tabIndex={0}
               aria-label={`Lacak status aduan ${report.ticketId} untuk merchant ${report.merchantName}`}
