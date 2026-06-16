@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
 import {
@@ -7,18 +7,26 @@ import {
   Calendar,
   Building2,
   AlertCircle,
+  Loader2,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useSession } from '@/lib/auth-client';
+import { fetchApi } from '@/lib/api';
 
 interface SavedReport {
   ticketId: string;
   merchantName: string;
   violationCategory: string;
   createdAt: string;
+  status?: string;
+  isFromServer?: boolean;
 }
 
 export default function RiwayatPage() {
   const navigate = useNavigate();
+  const { data: session, isPending: isSessionLoading } = useSession();
+  const [loadingServer, setLoadingServer] = useState(false);
+
   const [reports, setReports] = useState<SavedReport[]>(() => {
     try {
       const existing = localStorage.getItem('siris_report_history');
@@ -28,6 +36,51 @@ export default function RiwayatPage() {
       return [];
     }
   });
+
+  useEffect(() => {
+    if (session?.user) {
+      const fetchMyReports = async () => {
+        setLoadingServer(true);
+        try {
+          const res = await fetchApi<{ success: boolean; data: SavedReport[] }>(
+            '/api/reports/me'
+          );
+          if (res.success && res.data) {
+            const serverReports: SavedReport[] = res.data.map((r) => ({
+              ...r,
+              isFromServer: true,
+            }));
+
+            // Merge server reports with local reports (avoiding duplicates by ticketId)
+            setReports((prev) => {
+              const merged = [...serverReports];
+              const serverTicketIds = new Set(
+                serverReports.map((r) => r.ticketId)
+              );
+
+              prev.forEach((p) => {
+                if (!serverTicketIds.has(p.ticketId)) {
+                  merged.push(p);
+                }
+              });
+
+              // Sort newest first
+              return merged.sort(
+                (a, b) =>
+                  new Date(b.createdAt).getTime() -
+                  new Date(a.createdAt).getTime()
+              );
+            });
+          }
+        } catch (e) {
+          console.error('Failed to fetch server reports', e);
+        } finally {
+          setLoadingServer(false);
+        }
+      };
+      fetchMyReports();
+    }
+  }, [session?.user]);
 
   const handleDelete = (ticketId: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -71,7 +124,7 @@ export default function RiwayatPage() {
         </p>
       </div>
 
-      {reports.length > 0 && (
+      {reports.length > 0 && !loadingServer && !isSessionLoading && (
         <div className="flex justify-end mb-4">
           <Button
             variant="outline"
@@ -84,7 +137,14 @@ export default function RiwayatPage() {
         </div>
       )}
 
-      {reports.length === 0 ? (
+      {isSessionLoading || loadingServer ? (
+        <div className="flex flex-col items-center justify-center py-20 space-y-4">
+          <Loader2 className="w-10 h-10 animate-spin text-primary" />
+          <p className="text-muted-foreground text-sm font-medium animate-pulse">
+            Menyelaraskan riwayat dengan server...
+          </p>
+        </div>
+      ) : reports.length === 0 ? (
         <div className="border border-dashed border-border bg-card/40 rounded-3xl p-12 text-center max-w-xl mx-auto flex flex-col items-center justify-center space-y-4">
           <div className="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
             <Calendar className="w-8 h-8" />
@@ -164,15 +224,27 @@ export default function RiwayatPage() {
             </div>
           ))}
 
-          <div className="flex gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6 text-xs text-amber-800 leading-relaxed">
-            <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
-            <span>
-              <strong>Catatan:</strong> Riwayat di atas hanya tersimpan secara
-              lokal di browser perangkat ini. Jika Anda membersihkan data/cache
-              browser atau menggunakan perangkat/browser lain, data ini akan
-              hilang.
-            </span>
-          </div>
+          {!session?.user ? (
+            <div className="flex gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6 text-xs text-amber-800 leading-relaxed">
+              <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
+              <span>
+                <strong>Catatan:</strong> Anda belum masuk. Riwayat di atas
+                hanya tersimpan secara lokal di browser perangkat ini. Jika Anda
+                membersihkan data/cache browser, data ini akan hilang.{' '}
+                <strong>Masuk akun</strong> untuk menyimpan laporan secara
+                permanen.
+              </span>
+            </div>
+          ) : (
+            <div className="flex gap-3 bg-emerald-50 border border-emerald-200 rounded-xl p-4 mt-6 text-xs text-emerald-800 leading-relaxed">
+              <AlertCircle className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+              <span>
+                <strong>Tersinkronisasi:</strong> Anda masuk sebagai{' '}
+                <strong>{session.user.email}</strong>. Laporan Anda aman di
+                server dan dapat diakses dari perangkat mana saja.
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>
